@@ -10,7 +10,11 @@ import org.springframework.stereotype.Controller;
 import com.clps.demo.domain.*;
 import com.clps.demo.service.CategoryService;
 
-
+/**
+ * 商品响应类
+ * @author len
+ *
+ */
 @Controller
 public class CategoryAction {
 
@@ -29,24 +33,34 @@ public class CategoryAction {
 	private Item item;
 	
 	private String value; //模糊查询前台返回的值
-	
+	/**
+	 * 分页查询商品
+	 * @return
+	 */
 	public String queryProduce(){
 		
 		productlist = categoryService.query(category,begin*end,end);
-		System.out.println("CategoryAction.queryProduce");
+//		System.out.println("CategoryAction.queryProduce");
 		return "success";
 	}
+	/**
+	 * 商品具体种类查询
+	 * @return
+	 */
 	public String queryItem(){
 		
 		itemlist = categoryService.queryItem(product.getProductid());
-		System.out.println(itemlist);
+//		System.out.println(itemlist);
 		for(Item i : itemlist){
 			
-			System.out.println(i.getAttr1());
+//			System.out.println(i.getAttr1());
 		}
 		return "success";
 	}
-	//查询库存
+	/**
+	 * 查询库存
+	 * @return
+	 */
 	public String queryQty(){
 	
 		qty = categoryService.queryInventory(item.getItemid());
@@ -54,13 +68,17 @@ public class CategoryAction {
 		return "success";
 	}
 	
-	//模糊查询
+	/**
+	 * 模糊查询商品
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
 	public String queryLike() throws UnsupportedEncodingException{
-		System.out.println(value);
+//		System.out.println(value);
 		value = new String(value.getBytes("ISO-8859-1"),"UTF-8");
 		productlist = categoryService.queryLike(value,begin*end,end);
 		if(!productlist.isEmpty()) {
-		System.out.println(productlist.get(0));
+//		System.out.println(productlist.get(0));
 		return "success";
 		}else return "error";
 	}

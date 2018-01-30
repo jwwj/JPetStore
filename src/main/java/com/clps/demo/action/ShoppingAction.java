@@ -19,7 +19,11 @@ import com.clps.demo.domain.Signon;
 import com.clps.demo.service.CategoryService;
 import com.clps.demo.service.ShoppingService;
 import com.opensymphony.xwork2.ActionContext;
-
+/**
+ * 购物车响应
+ * @author len
+ *
+ */
 public class ShoppingAction extends ActionSupport{
 	@Autowired
 	private CategoryService categoryService;
@@ -41,9 +45,12 @@ public class ShoppingAction extends ActionSupport{
 	private Double sumPrice;
 	private Profile profile;
 	
-
+/**
+ * 查询购物车
+ * @return
+ */
 	public String queryShopping(){
-		System.out.println(signon.getUserid() + "userid");
+		//System.out.println(signon.getUserid() + "userid");
 	
 		if(signon.getUserid().equals("null")){
 			item = categoryService.queryItemTwo(item.getItemid());
@@ -51,7 +58,7 @@ public class ShoppingAction extends ActionSupport{
 			if(itemlist == null){
 				itemlist = new ArrayList<Item>();
 			}
-			System.out.println("----");
+			//System.out.println("----");
 			qty = categoryService.queryInventory(item.getItemid());
 		
 			
@@ -87,16 +94,16 @@ public class ShoppingAction extends ActionSupport{
 			
 		}else{
 			
-			System.out.println("11");
+			//System.out.println("11");
 			qty = categoryService.queryInventory(item.getItemid());
 			item = categoryService.queryItemTwo(item.getItemid());
-			System.out.println(item.getItemid());
-			System.out.println(qty);
+			//System.out.println(item.getItemid());
+			//System.out.println(qty);
 			if(shoppingService.queryCountShopping(item.getItemid(), signon.getUserid()) > 0){
 				cart = shoppingService.queryOneShopping(signon.getUserid(), item.getItemid());
 				
 				shoppingService.updateQuantity(cart.getQuantity().intValue() + 1, item.getItemid(), signon.getUserid());
-				System.out.println(cart.getQuantity());
+			//	System.out.println(cart.getQuantity());
 			}else{
 				
 				cart = new Cart();
@@ -115,15 +122,18 @@ public class ShoppingAction extends ActionSupport{
 			
 		return "success";
 	}
-	
+	/**
+	 * 删除购物车
+	 * @return
+	 */
 	public String deleteShopping(){
 		
 		
 		if("0".equals(signon.getUserid())){
-			System.out.println("wu");
-			System.out.println(item.getItemid() + ",heheheh");
+		//	System.out.println("wu");
+		//	System.out.println(item.getItemid() + ",heheheh");
 			Map<String,Item> itemMap = (Map<String, Item>) ActionContext.getContext().getSession().get("itemMap");
-			System.out.println(itemMap);
+		//	System.out.println(itemMap);
 			itemMap.remove(item.getItemid());
 			ActionContext.getContext().getSession().put("itemMap", itemMap);
 			return "success";
@@ -131,9 +141,9 @@ public class ShoppingAction extends ActionSupport{
 			
 		}else{
 			
-			System.out.println("you");
-			System.out.println(item.getItemid());
-			System.out.println(signon.getUserid());
+//			System.out.println("you");
+//			System.out.println(item.getItemid());
+//			System.out.println(signon.getUserid());
 			int result = shoppingService.deleteShopping(item.getItemid(), signon.getUserid());
 			if(result > 0){
 				
@@ -145,33 +155,39 @@ public class ShoppingAction extends ActionSupport{
 		}
 		
 	}
-	
+	/**
+	 * 测试
+	 * @return
+	 */
 	public String queryShoppingTwo(){
 		category = new Category();
 		category.setCatid("CATS");
 		productlist = categoryService.query(category,0,10);
 		profile = categoryService.queryProfile(signon.getUserid());
 		listcart = shoppingService.queryShopping(signon.getUserid(),begin*end,end);
-		System.out.println(signon.getUserid());
+	//	System.out.println(signon.getUserid());
 		return "success";
 	}
-	
+	/**
+	 * 用户登录之后把购物车内的东西保存到该账户之下
+	 * @return
+	 */
 	public String saveCount(){
 		if("0".equals(signon.getUserid())){
-			System.out.println(item.getCount());
-			System.out.println(item.getItemid());
+//			System.out.println(item.getCount());
+//			System.out.println(item.getItemid());
 			itemMap = (Map<String, Item>) ActionContext.getContext().getSession().get("itemMap");
 			
 			Item item2 = itemMap.get(item.getItemid());
 			item2.setCount(item.getCount());
 			itemMap.put(item2.getItemid(),item2);
 			ActionContext.getContext().getSession().put("itemMap",itemMap);
-			System.out.println(itemMap.get(item2.getItemid()).getCount());
+//			System.out.println(itemMap.get(item2.getItemid()).getCount());
 		}else{
-			System.out.println(item.getListprice() * item.getCount());
+//			System.out.println(item.getListprice() * item.getCount());
 			shoppingService.updateQuantity(item.getCount(), item.getItemid(), signon.getUserid());
 			sumPrice = item.getListprice() * item.getCount();
-			System.out.println(sumPrice);
+//			System.out.println(sumPrice);
 		}
 		return "success";
 	}

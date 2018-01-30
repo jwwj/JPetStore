@@ -39,10 +39,10 @@ public class LoginAction extends ActionSupport{
 	private int begin = 0;
 	private int end = 10;
 	public String login(){
-		System.out.println(signon.getUserid());
-		System.out.println(signon.getPassword());
+//		System.out.println(signon.getUserid());
+//		System.out.println(signon.getPassword());
 		result = loginService.userLogin(signon.getUserid(),signon.getPassword());
-		System.out.println(result + ",result");
+//		System.out.println(result + ",result");
 		ActionContext.getContext().getSession().put("userid",signon.getUserid());
 		if(result > 0){
 			
@@ -50,8 +50,8 @@ public class LoginAction extends ActionSupport{
 				
 				itemMap = (Map<String, Item>) ActionContext.getContext().getSession().get("itemMap");
 				List<Cart> cartlist = shoppingService.queryShopping(signon.getUserid(),begin*end,end);
-				System.out.println(itemMap);
-				System.out.println(cartlist);
+//				System.out.println(itemMap);
+//				System.out.println(cartlist);
 				Cart cart = new Cart();
 				Set<String> set = itemMap.keySet();
 				for(String s : set){
@@ -59,14 +59,14 @@ public class LoginAction extends ActionSupport{
 					cart.setItem(itemMap.get(s));
 					if(cartlist.contains(cart)){
 						long count = itemMap.get(s).getCount() + shoppingService.count(s, signon.getUserid());
-						System.out.println(count);
+//						System.out.println(count);
 						shoppingService.updateQuantity((int)count, s, signon.getUserid());
 					}else{
 						int id=(int)(Math.random()*1000+1);
 						cart.setId((long)id);
 						cart.setSignon(signon);
 						cart.setQuantity((long)itemMap.get(s).getCount());
-						System.out.println(cart.getQuantity());
+//						System.out.println(cart.getQuantity());
 						shoppingService.saveShopping(cart);
 					}
 				}
@@ -89,7 +89,7 @@ public class LoginAction extends ActionSupport{
 	
 	public String saveProfile(){
 		profile.setUserid(signon.getUserid());
-		System.out.println(profile.getMylistopt());
+//		System.out.println(profile.getMylistopt());
 		if(profile.getMylistopt() == null){
 			
 			profile.setMylistopt((long)0);

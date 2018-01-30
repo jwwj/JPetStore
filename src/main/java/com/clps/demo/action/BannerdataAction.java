@@ -15,7 +15,11 @@ import com.clps.demo.domain.Profile;
 import com.clps.demo.domain.Signon;
 import com.clps.demo.service.BannerdataService;
 import com.clps.demo.service.CategoryService;
-
+/**
+ * 用户喜好、商品列表响应
+ * @author len
+ *
+ */
 public class BannerdataAction {
 	@Autowired
 	private BannerdataService bannerdataService;
@@ -28,6 +32,10 @@ public class BannerdataAction {
 	private Product product;
 	private Category category;
 	private String result;
+	/**
+	 * 获取用户喜好信息
+	 * @return
+	 */
 	public String queryBannerdata(){
 		
 		bannerdata = bannerdataService.querybanner(signon.getUserid());
@@ -35,6 +43,10 @@ public class BannerdataAction {
 		return "success";
 		
 	}
+	/**
+	 * 获取商品列表
+	 * @return
+	 */
 	public String queryProduce(){
 	
 		bannerdata = bannerdataService.querybanner(signon.getUserid());

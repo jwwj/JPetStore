@@ -7,6 +7,11 @@ import com.clps.demo.domain.*;
 import com.clps.demo.service.RegisterService;
 import com.clps.demo.service.impl.RegisterServiceImpl;
 
+/**
+ * 注册响应
+ * @author len
+ *
+ */
 @Controller
 public class RegisterAction {
 	@Autowired
@@ -15,12 +20,16 @@ public class RegisterAction {
 	private Profile profile;
 	private Signon signon;
 
+	/**
+	 * 注册新用户
+	 * @return
+	 */
 	public String insert(){
 		
-		System.out.println(signon.getUserid());
-		System.out.println(account.getPhone());
-		System.out.println(profile.getFavcategory());
-		System.out.println(profile.getBanneropt());
+//		System.out.println(signon.getUserid());
+//		System.out.println(account.getPhone());
+//		System.out.println(profile.getFavcategory());
+//		System.out.println(profile.getBanneropt());
 		
 		if(profile.getBanneropt() == null){
 			

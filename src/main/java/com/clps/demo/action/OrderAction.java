@@ -41,6 +41,11 @@ import com.clps.demo.service.impl.ShoppingServiceImpl;
  *                   别人笑我忒疯癫，我笑自己命太贱；
  *                   不见满街漂亮妹，哪个归得程序员？
 */
+/**
+ * 订单响应
+ * @author len
+ *
+ */
 public class OrderAction {
 	@Autowired
 	private OrderService orderService;
@@ -57,20 +62,26 @@ public class OrderAction {
 	private List<Orders> orderslist;
 	private int begin = 0;
 	private int end = 4;
-	
+	/**
+	 * 获取用户信息
+	 * @return
+	 */
 	public String queryAccount(){
-		System.out.println(signon.getUserid());
+//		System.out.println(signon.getUserid());
 		account = orderService.queryAccount(signon.getUserid());
-		System.out.println(account.getPhone());
+//		System.out.println(account.getPhone());
 		return "success";
 	}
-	
+	/**
+	 * 保存订单信息即支付
+	 * @return
+	 */
 	public String saveOrder(){
-		System.out.println(orders.getBilltolastname());
-		System.out.println(signon.getUserid()+",编号");
-		System.out.println(account.getFirstname()+",姓名");
+		//System.out.println(orders.getBilltolastname());
+		//System.out.println(signon.getUserid()+",编号");
+		//System.out.println(account.getFirstname()+",姓名");
 		account.setUserid(signon.getUserid());
-		System.out.println(account.getUserid());
+		//System.out.println(account.getUserid());
 		orders.setAccount(account);
 		int id=(int)(Math.random()*9999+1);
 		orders.setOrderid((long)id);
@@ -92,7 +103,7 @@ public class OrderAction {
 		}
 		
 		orders.setTotalprice(sum);
-		System.out.println(sum+",sum");
+		//System.out.println(sum+",sum");
 		
 		
 		for(Cart cart : cartlist){
@@ -137,14 +148,20 @@ public class OrderAction {
 		
 		return "success";
 	}
-	
+	/**
+	 * 查询某个订单信息
+	 * @return
+	 */
 	public String queryOrders(){
 		account = orderService.queryAccount(signon.getUserid());
 		cartlist = shoppingService.queryShopping(signon.getUserid(),begin*end,end);
 		orders = orderService.queryOrdersOne(orders.getOrderid());
 		return "success";
 	}
-	
+	/**
+	 * 订单历史记录
+	 * @return
+	 */
 	public String historyOrders(){
 		
 		orderslist = orderService.queryOrder(signon.getUserid(),begin*end,end);
